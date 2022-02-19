@@ -1,0 +1,23 @@
+[
+    {
+        "title": "what is ur name?",
+        "Answer1": "omar",
+        "Answer2": "sami",
+        "Answer3": "ali",
+        "correctanswer": "omar"
+    },
+    {
+        "title": "what is ur job?",
+        "Answer1": "doctor",
+        "Answer2": "developer",
+        "Answer3": "actor",
+        "correctanswer": "developer"
+    },
+    {
+        "title": "how old are u?",
+        "Answer1": "22",
+        "Answer2": "21",
+        "Answer3": "23",
+        "correctanswer": "23"
+    }
+]

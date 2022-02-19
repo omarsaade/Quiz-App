@@ -7,11 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz App</title>
     <link rel="stylesheet" href="quiz.css">
+
 </head>
 
 <body>
 
-    <script src="quiz.js"></script>
+    <div class="header">
+        <div class="count">Questions Count <span class="show"></span></div>
+        <div class="category"><span class="cat">Category: HTML</span></div>
+        <div class="choice"></div>
+        <div class="submit">Submit Answer</div>
+        <div class="timer">
+            <span class="time" id="time">01:00</span>
+
+        </div>
+    </div>
+
+    <script type="module" src="quiz.js"></script>
 </body>
 
 </html>
