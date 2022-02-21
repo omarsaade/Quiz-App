@@ -1,12 +1,12 @@
 const url = "quiz.json";
 let timo = document.querySelector(".timer");
 let choice = document.querySelector(".choice");
-var trueAnswer;
+var trueAnswer = 0;
 var falseAnswer;
 let submit = document.querySelector(".submit");
 
 
-
+var i = 0;
 
 
 var c = [
@@ -33,93 +33,31 @@ var c = [
     }
 ];
 
-var i = 0;
-
-
-
-
 
 fetch(url)
     .then(response => response.json())
     .then(repos => {
         document.querySelector(".show").innerHTML = repos.length;
 
-
-        const markup = `
-       
-    <div class="c">
-    
-      <span> ${c[i].title}</span><br>
-     
-      <input type="radio" datat="${c[i].Answer1}" name="radAnswer" id="one" ><label for="one">${c[i].Answer1}</label><br>
-      <input type="radio" datat="${c[i].Answer2}" name="radAnswer" id="two"><label for="two">${c[i].Answer2}</label><br>
-      <input type="radio" datat="${c[i].Answer3}" name="radAnswer" id="three"><label for="three">${c[i].Answer3}</label>
-    
-      </div> `;
-        document.querySelector(".choice").innerHTML = markup;
-
+        mark();
 
     })
     .catch(err => console.log(err));
 
 
-
-
-
-
-
-
-
-
-
+// bas na3mul click 3a submit
 submit.onclick = function () {
-
-
-
     if (document.getElementById("one").checked || document.getElementById("two").checked || document.getElementById("three").checked) {
-
         i++;
         if (i < 3) {
-
-            const markup = `
-       
-            <div class="c">
-            
-              <span> ${c[i].title}</span><br>
-             
-              <input type="radio"  name="radAnswer" id="one" ><label for="one">${c[i].Answer1}</label><br>
-              <input type="radio" name="radAnswer" id="two"><label for="two">${c[i].Answer2}</label><br>
-              <input type="radio"  name="radAnswer" id="three"><label for="three">${c[i].Answer3}</label>
-            
-              </div> `;
-
-            document.querySelector(".choice").innerHTML = markup;
-            // document.querySelector(".time").remove();
-
+            mark();
             document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
             startTimer(10, document.querySelector('#time'));
 
-
-
-
-
-
         } else {
-
-
-            // if (c[0].Answer1.checked === c[0].correctanswer) {
-            //     console.log("good");
-            // }
-
-
-
-
-
             document.querySelector(".choice").innerHTML = `from${c.length}`;
 
         }
-
-
     }
 }
 
@@ -132,30 +70,10 @@ submit.onclick = function () {
 
 
 
-
-
 setInterval(() => {
-
-
-
     i++;
-
     if (i < 3) {
-
-        const markup = `
-   
-    <div class="c">
-    
-      <span>${c[i].title}</span><br>
-     
-      <input type="radio" datat="${c[i].Answer1}" name="radAnswer" id="one" ><label for="one">${c[i].Answer1}</label><br>
-      <input type="radio" datat="${c[i].Answer2}" name="radAnswer" id="two"><label for="two">${c[i].Answer2}</label><br>
-      <input type="radio" datat="${c[i].Answer3}"  name="radAnswer" id="three"><label for="three">${c[i].Answer3}</label>
-    
-      </div> `;
-
-
-        document.querySelector(".choice").innerHTML = markup;
+        mark();
         document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
         startTimer(10, document.querySelector('#time'));
         let c = document.querySelector("#one").getAttribute('datat');
@@ -170,6 +88,23 @@ setInterval(() => {
 
 
 
+
+
+
+function mark() {
+    const markup = `
+   
+    <div class="c">
+    <span>${c[i].title}</span><br>
+      <input type="radio"  name="radAnswer" id="one" ><label for="one">${c[i].Answer1}</label><br>
+      <input type="radio" name="radAnswer" id="two"><label for="two">${c[i].Answer2}</label><br>
+      <input type="radio" name="radAnswer" id="three"><label for="three">${c[i].Answer3}</label>
+    
+      </div> `;
+
+
+    document.querySelector(".choice").innerHTML = markup;
+}
 
 
 
