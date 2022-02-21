@@ -19,6 +19,7 @@ body {
     color: white;
     padding: 20px 50px;
     text-align: center;
+    font-weight: bold;
     
 }
 
@@ -40,6 +41,7 @@ body {
     text-align: center;
     padding: 15px;
     cursor: pointer;
+    font-weight: bold;
 
 }
 
@@ -93,4 +95,20 @@ body {
 
 .backo {
     background-color: rgb(21, 108, 207);
+}
+
+.bro {
+    color: red;
+}
+
+
+.c {
+ font-weight: bold;
+padding-top: 20px;
+/* border-bottom: 10px solid black; */
+
+}
+
+#one {
+    /* border-bottom: 10px solid black; */
 }

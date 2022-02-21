@@ -1,15 +1,13 @@
 const url = "quiz.json";
-let timo = document.querySelector(".timer");
-let choice = document.querySelector(".choice");
-var trueAnswer = 0;
-var falseAnswer;
-let submit = document.querySelector(".submit");
-var z = 0;
-
-var mo = " ";
-var i = 0;
+let timo = document.querySelector(".timer"),
+    choice = document.querySelector(".choice"),
+    submit = document.querySelector(".submit"),
+    z = 0,
+    level = " ",
+    i = 0;
 
 
+//Add Data
 var c = [
     {
         "title": "what is ur name?",
@@ -35,103 +33,89 @@ var c = [
 ];
 
 
+
+// Fetch data From quiz.json
 fetch(url)
     .then(response => response.json())
     .then(repos => {
         document.querySelector(".show").innerHTML = repos.length;
-
+        //Displaying the Question and the Answers
         mark();
-
     })
     .catch(err => console.log(err));
 
 
-// bas na3mul click 3a submit
+
+
+// when Submit is clicked
 submit.onclick = function () {
-
-
+    //Display the Number Of correct answer in the Page
     disp();
 
 
     i++;
+    // changing the color of bullets when submitting
     var b = document.querySelectorAll(".round");
     b[i - 1].classList.add("backo");
-    console.log(i);
-    if (i < 3) {
-        mark();
-        document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
-        startTimer(10, document.querySelector('#time'));
 
-
-    } else {
-        stato();
-        document.querySelector(".time").remove();
-        document.querySelector(".choice").innerHTML = `${mo}, ${z} From ${c.length}`;
-
-    }
+    //reload timer
+    timz();
 
 }
 
 
 
 
-
+// Create Bullets
 c.forEach(element => {
-
     let divo = document.createElement("div");
     divo.className = "round";
-
     document.querySelector(".timo").appendChild(divo);
-
 });
 
 
 
 
-
-// divo.classList.add("backo");
-
-
-
-
+// interval of each question
 setInterval(() => {
     i++;
+    // changing the color of bullet when submitting
     var b = document.querySelectorAll(".round");
     b[i - 1].classList.add("backo");
-    console.log(i);
+
+
     if (i < 3) {
+        //Displaying the Question and the Answers
         mark();
         document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
-        startTimer(10, document.querySelector('#time'));
+        startTimer(60, document.querySelector('#time'));
 
     } else {
+        // Level analysis
         stato();
         document.querySelector(".time").remove();
-        var mo = "bad";
-        document.querySelector(".choice").innerHTML = `${mo}, ${z} From ${c.length}`;
+        var level = "bad";
+        document.querySelector(".choice").innerHTML = `<span class="bro">${level}</span>, ${z} From ${c.length}`;
 
     }
 
 
-}, 10000);
+}, 60000);
 
 
 
 
 
-
+//Displaying the Question and the Answers
 function mark() {
     const markup = `
-   
     <div class="c">
     <span>${c[i].title}</span><br>
-      <input type="radio"  name="radAnswer"  value="${c[i].Answer1}" id="one" checked>${c[i].Answer1}<br>
-      <input type="radio" name="radAnswer" value="${c[i].Answer2}" id="two" >${c[i].Answer2}<br>
-      <input type="radio" name="radAnswer" value="${c[i].Answer3}" id="three" >${c[i].Answer3}<br>
-    
-      </div> `;
-
-
+    <input type="radio"  name="radAnswer"  value="${c[i].Answer1}" id="one" checked>${c[i].Answer1}<br>
+    <input type="radio" name="radAnswer" value="${c[i].Answer2}" id="two" >${c[i].Answer2}<br>
+    <input type="radio" name="radAnswer" value="${c[i].Answer3}" id="three" >${c[i].Answer3}<br>
+    </div> `;
+    //display on the Page
     document.querySelector(".choice").innerHTML = markup;
 }
 
@@ -141,7 +125,7 @@ function mark() {
 
 
 
-
+// Count down Timer
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
     setInterval(function () {
@@ -159,46 +143,36 @@ function startTimer(duration, display) {
     }, 1000);
 }
 
+//Display and set Time when page is loaded
 window.onload = function () {
-
-    var fiveMinutes = 10,
+    var fiveMinutes = 60,
         display = document.querySelector('#time');
     startTimer(fiveMinutes, display);
 };
 
 
-
+//checking the number of correct Answers
 function disp() {
-
-
     if (document.getElementById('one').checked) {
-        // var z = 0;
+
         if (document.getElementById("one").value === c[0].correctanswer) {
             z++;
-            console.log(z);
         }
-
-
-
     }
     else if (document.getElementById('two').checked) {
 
         if (document.getElementById("two").value === c[1].correctanswer) {
             z++;
-            console.log(z);
         }
 
     }
     else if (document.getElementById('three').checked) {
 
-
         if (document.getElementById("three").value === c[2].correctanswer) {
             z++;
             stato();
-            document.querySelector(".choice").innerHTML = `${mo}, ${z} From ${c.length}`;
+            document.querySelector(".choice").innerHTML = `<span class="bro">${level}</span>, ${z} From ${c.length}`;
         }
-
-
     } else {
         console.log("error");
     }
@@ -206,14 +180,44 @@ function disp() {
 }
 
 
-function stato() {
 
+// Level analysis
+function stato() {
     if (z === 1) {
-        mo = "Bad";
+        level = "Bad";
     } else if (z === 2) {
-        mo = "Good";
+        level = "Good";
     } else {
-        mo = "Excellent"
+        level = "Excellent"
     }
 }
+
+
+//reload timer
+function timz() {
+
+    if (i < 3) {
+        mark();
+        document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
+        startTimer(60, document.querySelector('#time'));
+
+
+    } else {
+        //End of the quiz
+        stato();
+        //remove count down Timer
+        document.querySelector(".time").remove();
+        document.querySelector(".choice").innerHTML = `<span class="bro">${level}</span>, ${z} From ${c.length}`;
+
+    }
+
+}
+
+
+
+
+
+
+
+
 
