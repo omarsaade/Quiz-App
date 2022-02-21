@@ -4,8 +4,9 @@ let choice = document.querySelector(".choice");
 var trueAnswer = 0;
 var falseAnswer;
 let submit = document.querySelector(".submit");
+var z = 0;
 
-
+var mo = " ";
 var i = 0;
 
 
@@ -47,40 +48,68 @@ fetch(url)
 
 // bas na3mul click 3a submit
 submit.onclick = function () {
-    if (document.getElementById("one").checked || document.getElementById("two").checked || document.getElementById("three").checked) {
-        i++;
-        if (i < 3) {
-            mark();
-            document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
-            startTimer(10, document.querySelector('#time'));
 
-        } else {
-            document.querySelector(".choice").innerHTML = `from${c.length}`;
 
-        }
+    disp();
+
+
+    i++;
+    var b = document.querySelectorAll(".round");
+    b[i - 1].classList.add("backo");
+    console.log(i);
+    if (i < 3) {
+        mark();
+        document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
+        startTimer(10, document.querySelector('#time'));
+
+
+    } else {
+        stato();
+        document.querySelector(".time").remove();
+        document.querySelector(".choice").innerHTML = `${mo}, ${z} From ${c.length}`;
+
     }
+
 }
 
 
 
 
 
+c.forEach(element => {
 
+    let divo = document.createElement("div");
+    divo.className = "round";
+
+    document.querySelector(".timo").appendChild(divo);
+
+});
+
+
+
+
+
+// divo.classList.add("backo");
 
 
 
 
 setInterval(() => {
     i++;
+    var b = document.querySelectorAll(".round");
+    b[i - 1].classList.add("backo");
+    console.log(i);
     if (i < 3) {
         mark();
         document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
         startTimer(10, document.querySelector('#time'));
-        let c = document.querySelector("#one").getAttribute('datat');
-        console.log(c);
 
     } else {
-        document.querySelector(".choice").innerHTML = `from${c.length}`;
+        stato();
+        document.querySelector(".time").remove();
+        var mo = "bad";
+        document.querySelector(".choice").innerHTML = `${mo}, ${z} From ${c.length}`;
+
     }
 
 
@@ -96,26 +125,15 @@ function mark() {
    
     <div class="c">
     <span>${c[i].title}</span><br>
-      <input type="radio"  name="radAnswer" id="one" ><label for="one">${c[i].Answer1}</label><br>
-      <input type="radio" name="radAnswer" id="two"><label for="two">${c[i].Answer2}</label><br>
-      <input type="radio" name="radAnswer" id="three"><label for="three">${c[i].Answer3}</label>
+      <input type="radio"  name="radAnswer"  value="${c[i].Answer1}" id="one" checked>${c[i].Answer1}<br>
+      <input type="radio" name="radAnswer" value="${c[i].Answer2}" id="two" >${c[i].Answer2}<br>
+      <input type="radio" name="radAnswer" value="${c[i].Answer3}" id="three" >${c[i].Answer3}<br>
     
       </div> `;
 
 
     document.querySelector(".choice").innerHTML = markup;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -148,4 +166,54 @@ window.onload = function () {
     startTimer(fiveMinutes, display);
 };
 
+
+
+function disp() {
+
+
+    if (document.getElementById('one').checked) {
+        // var z = 0;
+        if (document.getElementById("one").value === c[0].correctanswer) {
+            z++;
+            console.log(z);
+        }
+
+
+
+    }
+    else if (document.getElementById('two').checked) {
+
+        if (document.getElementById("two").value === c[1].correctanswer) {
+            z++;
+            console.log(z);
+        }
+
+    }
+    else if (document.getElementById('three').checked) {
+
+
+        if (document.getElementById("three").value === c[2].correctanswer) {
+            z++;
+            stato();
+            document.querySelector(".choice").innerHTML = `${mo}, ${z} From ${c.length}`;
+        }
+
+
+    } else {
+        console.log("error");
+    }
+
+}
+
+
+function stato() {
+
+    if (z === 1) {
+        mo = "Bad";
+    } else if (z === 2) {
+        mo = "Good";
+    } else {
+        mo = "Excellent"
+    }
+}
 
