@@ -3,11 +3,13 @@ let timo = document.querySelector(".timer");
 let choice = document.querySelector(".choice");
 var trueAnswer;
 var falseAnswer;
+let submit = document.querySelector(".submit");
 
 
 
 
-const c = [
+
+var c = [
     {
         "title": "what is ur name?",
         "Answer1": "omar",
@@ -31,40 +33,152 @@ const c = [
     }
 ];
 
+var i = 0;
+
+
+
 
 
 fetch(url)
     .then(response => response.json())
     .then(repos => {
         document.querySelector(".show").innerHTML = repos.length;
+
+
         const markup = `
+       
     <div class="c">
-      <span>   ${repos["1"].title}</span><br>
-      <input type="radio" id="one"><label for="one">${repos["1"].Answer1}</label><br>
-      <input type="radio" id="one"><label for="one">${repos["1"].Answer2}</label><br>
-      <input type="radio" id="one"><label for="one">${repos["1"].Answer3}</label>
-      </div>`;
+    
+      <span> ${c[i].title}</span><br>
+     
+      <input type="radio" datat="${c[i].Answer1}" name="radAnswer" id="one" ><label for="one">${c[i].Answer1}</label><br>
+      <input type="radio" datat="${c[i].Answer2}" name="radAnswer" id="two"><label for="two">${c[i].Answer2}</label><br>
+      <input type="radio" datat="${c[i].Answer3}" name="radAnswer" id="three"><label for="three">${c[i].Answer3}</label>
+    
+      </div> `;
         document.querySelector(".choice").innerHTML = markup;
-
-
-
 
 
     })
     .catch(err => console.log(err));
 
-for (let i = 0; i < 3; i++) {
-    const markup = `
-    <div class="c">
-      <span>   ${repos[i].title}</span><br>
-      <input type="radio" id="one"><label for="one">${repos[i].Answer1}</label><br>
-      <input type="radio" id="one"><label for="one">${repos[i].Answer2}</label><br>
-      <input type="radio" id="one"><label for="one">${repos[i].Answer3}</label>
-      </div>`;
-    document.querySelector(".choice").innerHTML = markup;
 
 
+
+
+
+
+
+
+
+
+submit.onclick = function () {
+
+
+
+    if (document.getElementById("one").checked || document.getElementById("two").checked || document.getElementById("three").checked) {
+
+        i++;
+        if (i < 3) {
+
+            const markup = `
+       
+            <div class="c">
+            
+              <span> ${c[i].title}</span><br>
+             
+              <input type="radio"  name="radAnswer" id="one" ><label for="one">${c[i].Answer1}</label><br>
+              <input type="radio" name="radAnswer" id="two"><label for="two">${c[i].Answer2}</label><br>
+              <input type="radio"  name="radAnswer" id="three"><label for="three">${c[i].Answer3}</label>
+            
+              </div> `;
+
+            document.querySelector(".choice").innerHTML = markup;
+            // document.querySelector(".time").remove();
+
+            document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
+            startTimer(10, document.querySelector('#time'));
+
+
+
+
+
+
+        } else {
+
+
+            // if (c[0].Answer1.checked === c[0].correctanswer) {
+            //     console.log("good");
+            // }
+
+
+
+
+
+            document.querySelector(".choice").innerHTML = `from${c.length}`;
+
+        }
+
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+setInterval(() => {
+
+
+
+    i++;
+
+    if (i < 3) {
+
+        const markup = `
+   
+    <div class="c">
+    
+      <span>${c[i].title}</span><br>
+     
+      <input type="radio" datat="${c[i].Answer1}" name="radAnswer" id="one" ><label for="one">${c[i].Answer1}</label><br>
+      <input type="radio" datat="${c[i].Answer2}" name="radAnswer" id="two"><label for="two">${c[i].Answer2}</label><br>
+      <input type="radio" datat="${c[i].Answer3}"  name="radAnswer" id="three"><label for="three">${c[i].Answer3}</label>
+    
+      </div> `;
+
+
+        document.querySelector(".choice").innerHTML = markup;
+        document.querySelector(".timer").innerHTML = `<span class="time" id="time">01:00</span>`;
+        startTimer(10, document.querySelector('#time'));
+        let c = document.querySelector("#one").getAttribute('datat');
+        console.log(c);
+
+    } else {
+        document.querySelector(".choice").innerHTML = `from${c.length}`;
+    }
+
+
+}, 10000);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -93,7 +207,8 @@ function startTimer(duration, display) {
 }
 
 window.onload = function () {
-    var fiveMinutes = 60,
+
+    var fiveMinutes = 10,
         display = document.querySelector('#time');
     startTimer(fiveMinutes, display);
 };
